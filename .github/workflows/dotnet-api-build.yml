@@ -21,8 +21,11 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
+      working-directory: ./API  # Set working directory to API folder
       run: dotnet restore
     - name: Build
+      working-directory: ./API  # Set working directory to API folder
       run: dotnet build --no-restore
     - name: Test
+      working-directory: ./API  # Set working directory to API folder
       run: dotnet test --no-build --verbosity normal
