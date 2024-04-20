@@ -1,0 +1,35 @@
+name: Angular Build
+
+on:
+  workflow_run:
+    workflows: ["DotNet Build"]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    # Setup Node.js
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+
+    # Install Angular CLI
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
+
+    # Navigate to Angular app directory
+    - name: Navigate to Angular App Directory
+      working-directory: ./client
+
+    # Install Angular dependencies
+    - name: Install Angular Dependencies
+      run: npm install
+
+    # Build Angular app
+    - name: Build Angular App
+      run: ng build --configuration=production
