@@ -37,7 +37,7 @@ jobs:
 
     # Install Angular dependencies
     - name: Install Angular Dependencies
-      run: npm install --legacy-peer-deps
+      run: npm install
 
     # Build Angular app
     - name: Build Angular App
