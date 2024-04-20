@@ -12,7 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     # Setup .NET
     - name: Setup .NET
@@ -44,7 +45,7 @@ jobs:
 
     # Navigate to Angular app directory
     - name: Navigate to Angular App Directory
-      working-directory: ./client
+      run: cd client
 
     # Install Angular dependencies
     - name: Install Angular Dependencies
