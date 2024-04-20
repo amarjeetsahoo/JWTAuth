@@ -3,6 +3,7 @@ using API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -158,7 +159,7 @@ namespace API.Controllers
         public async Task<ActionResult<UserDetailDto>> GetUserDetail()
         {
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user= await _userManager.FindByIdAsync(currentUserId!);
+            var user = await _userManager.FindByIdAsync(currentUserId!);
             if (user == null)
             {
                 return NotFound(new AuthResponseDto
@@ -173,11 +174,24 @@ namespace API.Controllers
                 Id = user.Id,
                 Email = user.Email,
                 FullName = user.FullName,
-                Roles = [..await _userManager.GetRolesAsync(user!)],
+                Roles = [.. await _userManager.GetRolesAsync(user!)],
                 PhoneNumber = user.PhoneNumber,
                 PhoneNumberConfirmed = user.PhoneNumberConfirmed,
                 AccessFailedCount = user.AccessFailedCount
             });
+        }
+
+        [HttpGet("getusers")]
+        public async Task<ActionResult<IEnumerable<UserDetailDto>>> GetUsers()
+        {
+            var users = await _userManager.Users.Select(user => new UserDetailDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FullName = user.FullName,
+                Roles = _userManager.GetRolesAsync(user).Result.ToArray()
+            }).ToListAsync();
+            return Ok(users);
         }
     }
 }
