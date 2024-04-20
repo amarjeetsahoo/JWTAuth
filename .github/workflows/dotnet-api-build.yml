@@ -1,4 +1,7 @@
-name: .NET and Angular Build
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
 
 on:
   push:
@@ -12,40 +15,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    # Setup .NET
+    - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 6.0.x
-
-    # Restore and build .NET project
-    - name: Restore and Build .NET API
-      working-directory: ./API
-      run: |
-        dotnet restore
-        dotnet build --no-restore
-
-    # Install Node.js and npm
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18.16.x'
-
-    # Install Angular CLI
-    - name: Install Angular CLI
-      run: npm install -g @angular/cli@16.0.0
-
-    # Navigate to Angular app directory
-    - name: Navigate to Angular App Directory
-      run: cd client
-
-    # Install Angular dependencies
-    - name: Install Angular Dependencies
-      run: npm install --legacy-peer-deps
-
-    # Build Angular app
-    - name: Build Angular App
-      run: ng build --configuration=production
+    - name: Restore dependencies
+      working-directory: ./API  # Set working directory to API folder
+      run: dotnet restore
+    - name: Build
+      working-directory: ./API  # Set working directory to API folder
+      run: dotnet build --no-restore
