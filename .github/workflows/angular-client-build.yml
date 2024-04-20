@@ -29,16 +29,15 @@ jobs:
 
     # Install Angular CLI
     - name: Install Angular CLI
+      working-directory: ./client
       run: npm install -g @angular/cli@16.0.0
-
-    # Navigate to Angular app directory
-    - name: Navigate to Angular App Directory
-      run: cd ./client
 
     # Install Angular dependencies
     - name: Install Angular Dependencies
+      working-directory: ./client
       run: npm install
 
     # Build Angular app
     - name: Build Angular App
+      working-directory: ./client
       run: ng build --configuration=production
