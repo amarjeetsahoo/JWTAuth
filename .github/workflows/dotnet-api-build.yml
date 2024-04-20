@@ -1,4 +1,4 @@
-name: .NET Build
+name: .NET and Angular Build
 
 on:
   push:
@@ -13,33 +13,43 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    # Setup .NET
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 6.0.x
-    - name: Restore dependencies
+
+    # Restore and build .NET project
+    - name: Restore and Build .NET API
       working-directory: ./API
-      run: dotnet restore
-    - name: Build
-      working-directory: ./API
-      run: dotnet build --no-restore
-    - name: Test
+      run: |
+        dotnet restore
+        dotnet build --no-restore
+
+    # Test .NET project
+    - name: Test .NET API
       working-directory: ./API
       run: dotnet test --no-build --verbosity normal
 
-  trigger_angular_build:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Trigger Angular Build Workflow
-      uses: actions/github-script@0.10.1
+    # Install Node.js and npm
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const { data: workflows } = await github.actions.listRepoWorkflows();
-          const angularBuildWorkflow = workflows.find(workflow => workflow.name === 'Angular Build');
-          if (angularBuildWorkflow) {
-            await github.actions.createWorkflowDispatch({
-              workflow_id: angularBuildWorkflow.id
-            });
-          }
+        node-version: '14.x'
+
+    # Install Angular CLI
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
+
+    # Navigate to Angular app directory
+    - name: Navigate to Angular App Directory
+      working-directory: ./client
+
+    # Install Angular dependencies
+    - name: Install Angular Dependencies
+      run: npm install
+
+    # Build Angular app
+    - name: Build Angular App
+      run: ng build --configuration=production
