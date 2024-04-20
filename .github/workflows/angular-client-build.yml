@@ -33,7 +33,7 @@ jobs:
 
     # Navigate to Angular app directory
     - name: Navigate to Angular App Directory
-      run: cd ./JWTAuth/client
+      run: cd ./client
 
     # Install Angular dependencies
     - name: Install Angular Dependencies
