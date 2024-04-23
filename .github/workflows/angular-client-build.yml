@@ -5,12 +5,12 @@ on:
     branches:
       - master
     paths:
-      - 'client/**'
+      - 'clientapp/**'
   pull_request:
     branches:
       - master
     paths:
-      - 'client/**'
+      - 'clientapp/**'
 
 jobs:
   build:
@@ -29,15 +29,15 @@ jobs:
 
     # Install Angular CLI
     - name: Install Angular CLI
-      working-directory: ./client
+      working-directory: ./clientapp
       run: npm install -g @angular/cli@16.0.0
 
     # Install Angular dependencies
     - name: Install Angular Dependencies
-      working-directory: ./client
+      working-directory: ./clientapp
       run: npm install
 
     # Build Angular app
     - name: Build Angular App
-      working-directory: ./client
+      working-directory: ./clientapp
       run: ng build --configuration=production
