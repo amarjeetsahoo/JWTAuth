@@ -10,7 +10,12 @@
       >
         <h2 class="text-9xl font-bold sm:text-9xl">
           Welcome to MyApp: JWT-Auth
-          <span class="hidden sm:block text-2xl"> You are not logged in! </span>
+          <span *ngIf="!showData" class="hidden sm:block text-2xl">
+            You are not logged in!
+          </span>
+          <span *ngIf="showData" class="hidden sm:block text-2xl">
+            Hi {{ userDetails!.fullName.toUpperCase() }}
+          </span>
         </h2>
 
         <a
@@ -48,17 +53,4 @@
       >
     </p>
   </footer>
-
-  <script
-    data-name="BMC-Widget"
-    data-cfasync="false"
-    src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
-    data-id="sahilnetic"
-    data-description="Support me on Buy me a coffee!"
-    data-message=""
-    data-color="#FFDD00"
-    data-position="Right"
-    data-x_margin="18"
-    data-y_margin="18"
-  ></script>
 </div>
