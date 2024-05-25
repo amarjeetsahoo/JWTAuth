@@ -21,6 +21,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { InterceptorInterceptor } from './interceptor/interceptor.interceptor';
 import { RegisterComponent } from './pages/register/register.component';
 import { AccountComponent } from './pages/account/account.component';
+import { UsersComponent } from './pages/users/users.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AccountComponent } from './pages/account/account.component';
     NavbarComponent,
     HomeComponent,
     RegisterComponent,
-    AccountComponent
+    AccountComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

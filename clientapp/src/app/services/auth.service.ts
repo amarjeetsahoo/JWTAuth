@@ -64,6 +64,16 @@ export class AuthService {
       );
   }
 
+  getAllUserDetails(): Observable<UserDetail[]> {
+    return this.http
+      .get<UserDetail[]>(`${this.apiUrl}Account/getusers`)
+      .pipe(
+        map((res: UserDetail[]) => {
+          return res;
+        })
+      );
+  }
+
   getUserDetail = () => {
     const token = this.getToken();
     if (!token) return null;
@@ -92,6 +102,14 @@ export class AuthService {
     if (isTokenExpired) this.logout();
     return isTokenExpired;
   }
+
+  getRolesAccess = (): string[] | null => {
+    const token = this.getToken();
+    if (!token) return null;
+
+    const decodedToken: any = jwtDecode(token);
+    return decodedToken.role || null;
+  };
 
   logout() {
     localStorage.removeItem(this.tokenKey);

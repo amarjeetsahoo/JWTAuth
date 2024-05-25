@@ -1,0 +1,59 @@
+<section class="container mx-auto p-6 font-mono">
+  <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+    <div class="w-full overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr
+            class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600"
+          >
+            <th class="px-4 py-3">Full Name</th>
+            <th class="px-4 py-3">Email</th>
+            <th class="px-4 py-3">Roles</th>
+            <th class="px-4 py-3">Phone Number</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white">
+          <tr
+            class="text-gray-700"
+            *ngFor="let user of allUserData; let i = index"
+            [attr.data-index]="i"
+          >
+            <td class="px-4 py-3 border">
+              <div class="flex items-center text-sm">
+                <div class="relative w-8 h-8 mr-3 rounded-full md:block">
+                  <img
+                    class="object-cover w-full h-full rounded-full"
+                    src="assets/profilepic.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                  <div
+                    class="absolute inset-0 rounded-full shadow-inner"
+                    aria-hidden="true"
+                  ></div>
+                </div>
+                <div>
+                  <p class="font-semibold text-black">{{ user.fullName }}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3 text-ms font-semibold border">
+              {{ user.email }}
+            </td>
+            <td class="px-4 py-3 text-xs border">
+              <span
+                *ngIf="user.roles.length > 0"
+                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"
+              >
+                {{ user.roles }}
+              </span>
+            </td>
+            <td class="px-4 py-3 text-sm border">
+              {{ user.phoneNumber || "NA" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
