@@ -17,8 +17,10 @@ import { LoginComponent } from './pages/login/login.component';
 import { NavbarComponent } from './pages/navbar/navbar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { InterceptorInterceptor } from './interceptor/interceptor.interceptor';
 import { RegisterComponent } from './pages/register/register.component';
+import { AccountComponent } from './pages/account/account.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { RegisterComponent } from './pages/register/register.component';
     LoginComponent,
     NavbarComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,9 @@ import { RegisterComponent } from './pages/register/register.component';
     MatSelectModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, useClass: InterceptorInterceptor, multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

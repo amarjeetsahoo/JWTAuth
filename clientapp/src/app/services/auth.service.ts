@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 import { RegisterInterface } from '../interfaces/register.interface';
 import { RolesInterface } from '../interfaces/roles.interface';
+import { UserDetail } from '../interfaces/user-details.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,16 @@ export class AuthService {
       );
   }
 
+  getAccountDetails(): Observable<UserDetail> {
+    return this.http
+      .get<UserDetail>(`${this.apiUrl}Account/detail`)
+      .pipe(
+        map((res: UserDetail) => {
+          return res;
+        })
+      );
+  }
+
   getUserDetail = () => {
     const token = this.getToken();
     if (!token) return null;
@@ -86,7 +97,7 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
   }
 
-  private getToken() {
+  getToken() {
     return localStorage.getItem(this.tokenKey) || '';
   }
 }
