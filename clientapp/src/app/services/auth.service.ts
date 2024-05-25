@@ -5,6 +5,8 @@ import { Observable, map } from 'rxjs';
 import { AuthResponse } from '../interfaces/auth-response';
 import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
+import { RegisterInterface } from '../interfaces/register.interface';
+import { RolesInterface } from '../interfaces/roles.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,26 @@ export class AuthService {
             localStorage.setItem(this.tokenKey, response.token);
           }
           return response;
+        })
+      );
+  }
+
+  register(data: RegisterInterface): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}Account/register`, data)
+      .pipe(
+        map((response: AuthResponse) => {
+          return response;
+        })
+      );
+  }
+
+  getRoles(): Observable<RolesInterface[]> {
+    return this.http
+      .get<RolesInterface[]>(`${this.apiUrl}Roles/getRoles`)
+      .pipe(
+        map((res: RolesInterface[]) => {
+          return res
         })
       );
   }

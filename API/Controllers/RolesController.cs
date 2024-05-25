@@ -44,6 +44,7 @@ namespace API.Controllers
             return BadRequest("Role Creation Failed!");
         }
 
+        [AllowAnonymous]
         [HttpGet("getRoles")]
         public async Task<ActionResult<IEnumerable<RoleResponseDto>>> GetRoles()
         {
