@@ -1,7 +1,6 @@
 ﻿using API.DTOs;
 using API.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +38,7 @@ namespace API.Controllers
 
             if (roleResult.Succeeded)
             {
-                return Ok("Role Created Successfully");
+                return Ok(new { message = "Role Deleted Successfully" });
             }
             return BadRequest("Role Creation Failed!");
         }
