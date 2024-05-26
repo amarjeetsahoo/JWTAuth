@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,12 +16,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoginComponent } from './pages/login/login.component';
 import { NavbarComponent } from './pages/navbar/navbar.component';
 import { HomeComponent } from './pages/home/home.component';
+import { AsyncPipe } from '@angular/common'
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { InterceptorInterceptor } from './interceptor/interceptor.interceptor';
 import { RegisterComponent } from './pages/register/register.component';
 import { AccountComponent } from './pages/account/account.component';
 import { UsersComponent } from './pages/users/users.component';
+import { RoleComponent } from './pages/role/role.component';
+import { RoleFormComponent } from './pages/role/role-form/role-form.component';
+import { RoleListComponent } from './pages/role/role-list/role-list.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,10 @@ import { UsersComponent } from './pages/users/users.component';
     HomeComponent,
     RegisterComponent,
     AccountComponent,
-    UsersComponent
+    UsersComponent,
+    RoleComponent,
+    RoleFormComponent,
+    RoleListComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +54,9 @@ import { UsersComponent } from './pages/users/users.component';
     MatMenuModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    FormsModule,
+    AsyncPipe
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: InterceptorInterceptor, multi: true
