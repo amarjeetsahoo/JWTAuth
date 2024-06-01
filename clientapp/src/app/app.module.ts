@@ -26,6 +26,8 @@ import { UsersComponent } from './pages/users/users.component';
 import { RoleComponent } from './pages/role/role.component';
 import { RoleFormComponent } from './pages/role/role-form/role-form.component';
 import { RoleListComponent } from './pages/role/role-list/role-list.component';
+import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { RoleListComponent } from './pages/role/role-list/role-list.component';
     UsersComponent,
     RoleComponent,
     RoleFormComponent,
-    RoleListComponent
+    RoleListComponent,
+    ForgetPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

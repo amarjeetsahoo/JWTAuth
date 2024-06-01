@@ -8,6 +8,8 @@ import { jwtDecode } from 'jwt-decode';
 import { RegisterInterface } from '../interfaces/register.interface';
 import { RolesInterface } from '../interfaces/roles.interface';
 import { UserDetail } from '../interfaces/user-details.interface';
+import { ForgotPasswordDTO } from '../interfaces/forgot-password.interface';
+import { ResetPasswordDTO } from '../interfaces/reset-password.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +39,26 @@ export class AuthService {
   register(data: RegisterInterface): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}Account/register`, data)
+      .pipe(
+        map((response: AuthResponse) => {
+          return response;
+        })
+      );
+  }
+
+  forgotPassword(data: ForgotPasswordDTO): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}Account/forgot-password`, data)
+      .pipe(
+        map((response: AuthResponse) => {
+          return response;
+        })
+      );
+  }
+
+  resetPassword(data: ResetPasswordDTO): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}Account/reset-password`, data)
       .pipe(
         map((response: AuthResponse) => {
           return response;
