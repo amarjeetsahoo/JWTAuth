@@ -28,6 +28,7 @@ import { RoleFormComponent } from './pages/role/role-form/role-form.component';
 import { RoleListComponent } from './pages/role/role-list/role-list.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
     RoleFormComponent,
     RoleListComponent,
     ForgetPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ResetPasswordDTO } from 'src/app/interfaces/reset-password.interface';
+import { ChangePasswordDTO } from 'src/app/interfaces/change-password.interface';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+  selector: 'app-change-password',
+  templateUrl: './change-password.component.html',
+  styleUrls: ['./change-password.component.scss']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ChangePasswordComponent implements OnInit {
 
-  resetPassword!: FormGroup
-  resetPasswordData!: ResetPasswordDTO;
+  changePassword!: FormGroup;
+  changePasswordDto!: ChangePasswordDTO;
 
   constructor(private fb: FormBuilder,
     private _authService: AuthService,
@@ -23,31 +23,29 @@ export class ResetPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.resetPassword = this.fb.group({
+    this.changePassword = this.fb.group({
+      currentPassword: ['', [Validators.required]],
       newPassword: ['', [Validators.required]]
-    });
+    })
   }
 
-  reset() {
-    let email = '', token = '';
-    this._route.queryParams.subscribe(params => {
-      email = params["email"];
-      token = params["token"];
-    });
-    this.resetPasswordData = {
-      email: email,
-      token: token,
-      newPassword: this.resetPassword.value.newPassword
+  change() {
+    this.changePasswordDto = {
+      email: this._authService.getUserDetail()?.email,
+      currentPassword: this.changePassword.value.currentPassword,
+      newPassword: this.changePassword.value.newPassword
     }
-    this._authService.resetPassword(this.resetPasswordData).subscribe({
+
+    this._authService.changePassword(this.changePasswordDto).subscribe({
       next: (response) => {
         this._snackbar.open(response.message, 'Close', {
           duration: 3000,
           horizontalPosition: 'center'
         });
+
         setTimeout(() => {
-          this._router.navigate(['/login']);
-        }, 3500)
+          this._router.navigate(['/']);
+        }, 3200)
       },
       error: (error) => {
         this._snackbar.open(error.error.message, 'Close', {
@@ -56,6 +54,7 @@ export class ResetPasswordComponent implements OnInit {
         });
       }
     });
+
   }
 
 }

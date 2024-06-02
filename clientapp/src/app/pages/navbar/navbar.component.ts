@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
-  private tokenKey = 'token';
+  private userKey = 'user';
   username: string = '';
   role: string = '';
   userDetail: any;
@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
 
   isLoggedIn() {
     if (this._authService.isLoggedIn()) {
-      const cookie = localStorage.getItem(this.tokenKey) || '';
+      const cookie = localStorage.getItem(this.userKey) || '';
       const decode = jwtDecode(cookie);
       const a = JSON.stringify(decode);
       const ab = JSON.parse(a);
@@ -50,6 +50,10 @@ export class NavbarComponent implements OnInit {
     });
 
     this._router.navigate(["/login"]);
+  }
+
+  changePassword() {
+    
   }
 
 }

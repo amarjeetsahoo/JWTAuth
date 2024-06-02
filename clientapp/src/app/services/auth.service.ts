@@ -10,6 +10,7 @@ import { RolesInterface } from '../interfaces/roles.interface';
 import { UserDetail } from '../interfaces/user-details.interface';
 import { ForgotPasswordDTO } from '../interfaces/forgot-password.interface';
 import { ResetPasswordDTO } from '../interfaces/reset-password.interface';
+import { ChangePasswordDTO } from '../interfaces/change-password.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ import { ResetPasswordDTO } from '../interfaces/reset-password.interface';
 export class AuthService {
 
   apiUrl: string = environment.apiUrl;
-  private tokenKey = 'token';
+  private userKey = 'user';
 
   constructor(
     private http: HttpClient
@@ -29,7 +30,7 @@ export class AuthService {
       .pipe(
         map((response: AuthResponse) => {
           if (response.isSuccess) {
-            localStorage.setItem(this.tokenKey, response.token);
+            localStorage.setItem(this.userKey, JSON.stringify(response));
           }
           return response;
         })
@@ -49,6 +50,16 @@ export class AuthService {
   forgotPassword(data: ForgotPasswordDTO): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}Account/forgot-password`, data)
+      .pipe(
+        map((response: AuthResponse) => {
+          return response;
+        })
+      );
+  }
+
+  changePassword(data: ChangePasswordDTO): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}Account/change-password`, data)
       .pipe(
         map((response: AuthResponse) => {
           return response;
@@ -112,7 +123,8 @@ export class AuthService {
   isLoggedIn() {
     const token = this.getToken();
     if (!token) return false;
-    return !this.isTokenExpired();
+    // return !this.isTokenExpired();
+    return true;
   }
 
   isTokenExpired() {
@@ -121,8 +133,9 @@ export class AuthService {
 
     const decoded = jwtDecode(token);
     const isTokenExpired = Date.now() >= decoded['exp']! * 1000;
-    if (isTokenExpired) this.logout();
-    return isTokenExpired;
+    // if (isTokenExpired) this.logout();
+    // return isTokenExpired;
+    return true;
   }
 
   getRolesAccess = (): string[] | null => {
@@ -134,10 +147,27 @@ export class AuthService {
   };
 
   logout() {
-    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userKey);
   }
 
-  getToken() {
-    return localStorage.getItem(this.tokenKey) || '';
-  }
+  refreshToken = (data: {
+    email: string;
+    token: string;
+    refreshToken: string;
+  }): Observable<AuthResponse> =>
+    this.http.post<AuthResponse>(`${this.apiUrl}account/refresh-token`, data);
+
+  getToken = (): string | null => {
+    const user = localStorage.getItem(this.userKey);
+    if (!user) return null;
+    const userDetail: AuthResponse = JSON.parse(user);
+    return userDetail.token;
+  };
+
+  getRefreshToken = (): string | null => {
+    const user = localStorage.getItem(this.userKey);
+    if (!user) return null;
+    const userDetail: AuthResponse = JSON.parse(user);
+    return userDetail.refreshToken;
+  };
 }
