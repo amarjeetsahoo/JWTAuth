@@ -5,6 +5,8 @@
 
 Welcome to my full-stack application project! This repository showcases a comprehensive application developed using **Angular 14** for the frontend and **.NET 6** for the backend, covering key aspects of modern web development and security.
 
+- Video Url: https://youtu.be/rctRpT6copI
+
 ## 🌟 Key Features
 
 ### User Authentication & Authorization
